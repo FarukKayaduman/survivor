@@ -2,25 +2,25 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private Transform target; // Reference to the target transform (character)
+    private Transform _target; // Reference to the _target transform (character)
 
-    public float moveSpeed = 2f; // Speed at which the enemy moves towards the target
+    [SerializeField] private float _moveSpeed = 1.0f; // Speed at which the enemy moves towards the _target
 
     public void SetTarget(Transform target)
     {
-        this.target = target;
+        this._target = target;
     }
 
     private void Update()
     {
-        // Check if the target exists
-        if (target != null)
+        // Check if the _target exists
+        if (_target != null)
         {
-            // Calculate the direction towards the target
-            Vector3 direction = (target.position - transform.position).normalized;
+            // Calculate the direction towards the _target
+            Vector3 direction = (_target.position - transform.position).normalized;
 
-            // Move towards the target
-            transform.Translate(moveSpeed * Time.deltaTime * direction);
+            // Move towards the _target
+            transform.Translate(_moveSpeed * Time.deltaTime * direction);
         }
     }
 
@@ -29,10 +29,7 @@ public class EnemyController : MonoBehaviour
         // Check if the bullet hits an enemy
         if (collision.CompareTag("Bullet"))
         {
-            // Remove the enemy from the scene
             Destroy(collision.gameObject);
-
-            // Remove the bullet from the scene
             Destroy(gameObject);
         }
     }

@@ -2,35 +2,34 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab; // Reference to the enemy prefab
-    public float spawnInterval = 1f; // Time between each enemy spawn
-    public float moveSpeed = 2f; // Speed at which enemies move towards the character
+    [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private float _spawnInterval = 2.25f; // Time between each enemy spawn
 
-    private Transform target; // Reference to the character's transform
-    private float timer; // Timer to control enemy spawning
+    private Transform _target; // Reference to the character's transform
+    private float _timer; // Timer to control enemy spawning
 
     private void Start()
     {
-        // Start the timer
-        timer = spawnInterval;
+        // Start the _timer
+        _timer = _spawnInterval;
 
         // Find the character
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        _target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update()
     {
-        // Decrement the timer
-        timer -= Time.deltaTime;
+        // Decrement the _timer
+        _timer -= Time.deltaTime;
 
         // Check if it's time to spawn an enemy
-        if (timer <= 0f)
+        if (_timer <= 0f)
         {
             // Spawn an enemy
             SpawnEnemy();
 
-            // Reset the timer
-            timer = spawnInterval;
+            // Reset the _timer
+            _timer = _spawnInterval;
         }
     }
 
@@ -40,13 +39,13 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = GetRandomSpawnPosition();
 
         // Instantiate the enemy at the spawn position
-        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        GameObject enemy = Instantiate(_enemyPrefab, spawnPosition, Quaternion.identity);
 
-        // Set the enemy's target as the character
+        // Set the enemy's _target as the character
         EnemyController enemyController = enemy.GetComponent<EnemyController>();
         if (enemyController != null)
         {
-            enemyController.SetTarget(target);
+            enemyController.SetTarget(_target);
         }
     }
 

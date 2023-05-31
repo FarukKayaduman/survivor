@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _bulletContainer;
     [SerializeField] private Rigidbody2D _rigidbody2D; // Players Rigidbody2D component
 
-    private readonly float _fireRate = 2.0f; // Time between each shot
     private readonly float _shootingRange = 2.0f;
     private readonly float _bulletSpeed = 100.0f;
     private readonly float _moveSpeed = 2.0f; // Character movement speed
@@ -15,9 +14,17 @@ public class PlayerController : MonoBehaviour
     private Transform _target;
     private float _timer; // Timer to control shooting frequency
 
+    public static float FireRate = 2.0f; // Time between each shot
+    public static float BulletDamage = 10.0f;
+
+    private void OnEnable()
+    {
+        EventManager.OnEnemyAttackEvent += TakeDamage;
+    }
+
     private void Start()
     {
-        _timer = _fireRate;
+        _timer = FireRate;
         UpdateHealthInfo(_health);
     }
 
@@ -32,8 +39,8 @@ public class PlayerController : MonoBehaviour
         {
             Shoot();
 
-            // Reset the _timer
-            _timer = _fireRate;
+            // Reset the _spawningTimer
+            _timer = FireRate;
         }
 
         // Read the keyboard inputs
@@ -85,7 +92,7 @@ public class PlayerController : MonoBehaviour
             bulletQuaternion = Quaternion.Euler(transform.up - new Vector3(0, 0, 90f));
         }
 
-        GameObject bullet = Instantiate(_bulletPrefab, transform.position, bulletQuaternion);
+        GameObject bullet = Instantiate(_bulletPrefab, transform.position, bulletQuaternion, _bulletContainer);
 
         bullet.GetComponent<Rigidbody2D>().AddForce(targetDirection * _bulletSpeed);
 
@@ -95,7 +102,17 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateHealthInfo(float health)
     {
+        _health = health;
         EventManager.OnHealthUpdateEvent?.Invoke(health);
     }
 
+    private void TakeDamage(float attackPoint)
+    {
+        float newHealth = _health - attackPoint;
+        UpdateHealthInfo(newHealth);
+        if (newHealth <= 0)
+        {
+            GameManager.Instance.LoseGame();
+        }
+    }
 }

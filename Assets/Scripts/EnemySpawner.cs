@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] private List<Enemy> _enemyInfos;
     [SerializeField] private List<GameObject> _enemyPrefabs;
 
     private Transform _target; // Reference to the character's transform
@@ -10,13 +11,14 @@ public class EnemySpawner : MonoBehaviour
 
     private int _enemiesCount;
 
-    private readonly float _spawnInterval = 2.25f; // Time between each enemy spawn
-    private float _timer; // Timer to control enemy spawning
+    private float _spawnInterval = 2.25f; // Time between each enemy spawn
+    private float _spawningTimer; // Timer to control enemy spawning
+    private float _difficultyIncreaseTimer; // Timer to control difficulty increase
 
     private void Start()
     {
-        // Start the _timer
-        _timer = _spawnInterval;
+        // Start the _spawningTimer
+        _spawningTimer = _spawnInterval;
 
         // Find the character
         _target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -24,16 +26,30 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        // Decrement the _timer
-        _timer -= Time.deltaTime;
+        // Decrement the _spawningTimer
+        _spawningTimer -= Time.deltaTime;
+        _difficultyIncreaseTimer += Time.deltaTime;
 
         // Check if it's time to spawn an enemy
-        if (_timer <= 0f)
+        if (_spawningTimer <= 0f)
         {
             SpawnEnemy();
 
-            // Reset the _timer
-            _timer = _spawnInterval;
+            // Reset the _spawningTimer
+            _spawningTimer = _spawnInterval;
+        }
+
+        // Check if it's time to increase enemy's health and decrease spawn interval
+        float difficultyIncreaseFrequency = 15.0f;
+        float difficultyIncreaseMultiplier = 0.1f;
+        if(_difficultyIncreaseTimer >= difficultyIncreaseFrequency)
+        {
+            foreach (Enemy enemy in _enemyInfos)
+            {
+                enemy.health *= (1 + difficultyIncreaseMultiplier);
+            }
+            _spawnInterval *= (1 - difficultyIncreaseMultiplier);
+            _difficultyIncreaseTimer = 0f;
         }
     }
 
@@ -49,8 +65,7 @@ public class EnemySpawner : MonoBehaviour
         _enemiesCount++;
 
         // Set the enemy's _target as the character
-        EnemyController enemyController = enemy.GetComponent<EnemyController>();
-        if (enemyController != null)
+        if (enemy.TryGetComponent<EnemyController>(out var enemyController))
         {
             enemyController.SetTarget(_target);
         }

@@ -1,16 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private Transform _bulletContainer;
     [SerializeField] private Rigidbody2D _rigidbody2D; // Players Rigidbody2D component
-    [SerializeField] private Slider _slider; // Reloading indicator
 
     private readonly float _fireRate = 2.0f; // Time between each shot
     private readonly float _shootingRange = 2.0f;
     private readonly float _bulletSpeed = 100.0f;
     private readonly float _moveSpeed = 2.0f; // Character movement speed
+    private float _health = 100.0f;
 
     private Transform _target;
     private float _timer; // Timer to control shooting frequency
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _timer = _fireRate;
-        _slider.maxValue = _fireRate;
+        UpdateHealthInfo(_health);
     }
 
     private void Update()
@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
         FindNearestEnemy();
 
         _timer -= Time.deltaTime;
-        _slider.value = _fireRate - _timer;
 
         // Check if it's time to shoot
         if (_timer <= 0f && _target != null)
@@ -89,5 +88,14 @@ public class PlayerController : MonoBehaviour
         GameObject bullet = Instantiate(_bulletPrefab, transform.position, bulletQuaternion);
 
         bullet.GetComponent<Rigidbody2D>().AddForce(targetDirection * _bulletSpeed);
+
+        float bulletLifeTime = 5.0f;
+        Destroy(bullet, bulletLifeTime);
     }
+
+    private void UpdateHealthInfo(float health)
+    {
+        EventManager.OnHealthUpdateEvent?.Invoke(health);
+    }
+
 }

@@ -2,13 +2,17 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] private Enemy enemyInfo;
+
     private Transform _target; // Reference to the _target transform (character)
 
-    [SerializeField] private float _moveSpeed = 1.0f; // Speed at which the enemy moves towards the _target
+    private float _attack;
+    private float _health;
+    private float _moveSpeed;
 
-    public void SetTarget(Transform target)
+    private void Awake()
     {
-        this._target = target;
+        SetEnemyInfo();
     }
 
     private void Update()
@@ -32,5 +36,17 @@ public class EnemyController : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
+    }
+    
+    public void SetTarget(Transform target)
+    {
+        this._target = target;
+    }
+
+    private void SetEnemyInfo()
+    {
+        _attack = enemyInfo.attack;
+        _health = enemyInfo.health;
+        _moveSpeed = enemyInfo.moveSpeed;
     }
 }

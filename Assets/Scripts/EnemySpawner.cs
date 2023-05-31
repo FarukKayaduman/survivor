@@ -1,11 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemyPrefab;
-    [SerializeField] private float _spawnInterval = 2.25f; // Time between each enemy spawn
+    [SerializeField] private List<GameObject> _enemyPrefabs;
 
     private Transform _target; // Reference to the character's transform
+    [SerializeField] private Transform _enemyContainer;
+
+    private int _enemiesCount;
+
+    private readonly float _spawnInterval = 2.25f; // Time between each enemy spawn
     private float _timer; // Timer to control enemy spawning
 
     private void Start()
@@ -25,7 +30,6 @@ public class EnemySpawner : MonoBehaviour
         // Check if it's time to spawn an enemy
         if (_timer <= 0f)
         {
-            // Spawn an enemy
             SpawnEnemy();
 
             // Reset the _timer
@@ -38,8 +42,11 @@ public class EnemySpawner : MonoBehaviour
         // Determine a random position outside the screen
         Vector3 spawnPosition = GetRandomSpawnPosition();
 
+        GameObject spawningEnemy = _enemyPrefabs[_enemiesCount % _enemyPrefabs.Count];
+
         // Instantiate the enemy at the spawn position
-        GameObject enemy = Instantiate(_enemyPrefab, spawnPosition, Quaternion.identity);
+        GameObject enemy = Instantiate(spawningEnemy, spawnPosition, Quaternion.identity, _enemyContainer);
+        _enemiesCount++;
 
         // Set the enemy's _target as the character
         EnemyController enemyController = enemy.GetComponent<EnemyController>();

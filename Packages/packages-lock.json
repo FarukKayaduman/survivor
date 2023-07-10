@@ -124,12 +124,12 @@
         "com.unity.2d.tilemap.extras": "2.2.3"
       }
     },
-    "com.unity.ide.visualstudio": {
-      "version": "2.0.18",
+    "com.unity.ide.rider": {
+      "version": "3.0.24",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.9"
+        "com.unity.ext.nunit": "1.0.6"
       },
       "url": "https://packages.unity.com"
     },

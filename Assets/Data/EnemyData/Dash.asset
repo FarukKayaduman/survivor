@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5dc9e5ec37c1314393a1810a5badb54, type: 3}
-  m_Name: Tank
+  m_Name: Dash
   m_EditorClassIdentifier: 
-  name: Tank
-  attack: 8
-  health: 20
-  moveSpeed: 0.5
+  name: Dash
+  attack: 10
+  health: 10
+  moveSpeed: 1
+  enemySprite: {fileID: -2092964637, guid: 4104ee12b4d54f54b91b3ba875787837, type: 3}

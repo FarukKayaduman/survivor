@@ -9,6 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f07c5b0c49d84622b1188bfb49685696, type: 3}
-  m_Name: OnHit
+  m_Script: {fileID: 11500000, guid: 9e9a89e84a75f014294fb5d9e950b93c, type: 3}
+  m_Name: PlayerAda
   m_EditorClassIdentifier: 
+  name: Ada
+  health: 100
+  moveSpeed: 2
+  defaultWeaponDamage: 10

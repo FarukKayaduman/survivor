@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using ScriptableObjects.Enemy;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private List<Enemy> _enemyInfos;
-    [SerializeField] private List<GameObject> _enemyPrefabs;
+    [SerializeField] private List<EnemySO> enemyInfos;
+    [SerializeField] private GameObject enemyPrefab;
 
-    private Transform _target; // Reference to the character's transform
-    [SerializeField] private Transform _enemyContainer;
+    [SerializeField] private Transform target; // Reference to the character's transform
+    [SerializeField] private Transform enemyContainer;
 
     private int _enemiesCount;
 
@@ -21,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
         _spawningTimer = _spawnInterval;
 
         // Find the character
-        _target = GameObject.FindGameObjectWithTag("Player").transform;
+        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update()
@@ -40,11 +41,11 @@ public class EnemySpawner : MonoBehaviour
         }
 
         // Check if it's time to increase enemy's health and decrease spawn interval
-        float difficultyIncreaseFrequency = 15.0f;
+        float difficultyIncreaseInterval = 15.0f;
         float difficultyIncreaseMultiplier = 0.1f;
-        if(_difficultyIncreaseTimer >= difficultyIncreaseFrequency)
+        if(_difficultyIncreaseTimer >= difficultyIncreaseInterval)
         {
-            foreach (Enemy enemy in _enemyInfos)
+            foreach (EnemySO enemy in enemyInfos)
             {
                 enemy.health *= (1 + difficultyIncreaseMultiplier);
             }
@@ -58,16 +59,16 @@ public class EnemySpawner : MonoBehaviour
         // Determine a random position outside the screen
         Vector3 spawnPosition = GetRandomSpawnPosition();
 
-        GameObject spawningEnemy = _enemyPrefabs[_enemiesCount % _enemyPrefabs.Count];
+        GameObject spawningEnemy = enemyPrefab;
 
         // Instantiate the enemy at the spawn position
-        GameObject enemy = Instantiate(spawningEnemy, spawnPosition, Quaternion.identity, _enemyContainer);
+        GameObject newEnemy = Instantiate(spawningEnemy, spawnPosition, Quaternion.identity, enemyContainer);
         _enemiesCount++;
 
         // Set the enemy's _target as the character
-        if (enemy.TryGetComponent<EnemyController>(out var enemyController))
+        if (newEnemy.TryGetComponent<Enemy>(out var enemy))
         {
-            enemyController.SetTarget(_target);
+            enemy.SetTarget(target);
         }
     }
 

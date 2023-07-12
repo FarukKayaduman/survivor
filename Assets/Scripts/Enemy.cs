@@ -1,13 +1,26 @@
+using System.Collections.Generic;
+using HealthSystem;
+using ScriptableObjects.Enemy;
+using ScriptableObjects.GameEvent;
+using ScriptableObjects.Player;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemyInfo;
+    [SerializeField] private GameEvent onDeath;
+    [SerializeField] private GameEvent onHit;
+    [SerializeField] private List<EnemySO> enemyDatas;
+    [SerializeField] private PlayerSO playerData;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
+    [SerializeField] private Health health;
 
     private Transform _target; // Reference to the _target transform (character)
 
+    public EnemySO enemyData;
+
     private float _attack;
-    private float _health;
+    private float _initialHealthValue;
     private float _moveSpeed;
 
     private readonly float _attackDelay = 1.0f;
@@ -15,7 +28,8 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
-        SetEnemyInfo();
+        int randomIndex = Random.Range(0, enemyDatas.Count);
+        SetEnemyInfo(randomIndex);
     }
 
     private void Start()
@@ -55,7 +69,7 @@ public class EnemyController : MonoBehaviour
         // Check if the bullet hits an enemy
         if (collision.CompareTag("Bullet"))
         {
-            TakeDamage(PlayerController.BulletDamage);
+            health.GetHit(playerData.defaultWeaponDamage);
             Destroy(collision.gameObject);
         }
     }
@@ -65,29 +79,32 @@ public class EnemyController : MonoBehaviour
         this._target = target;
     }
 
-    private void SetEnemyInfo()
+    private void SetEnemyInfo(int index)
     {
-        _attack = _enemyInfo.attack;
-        _health = _enemyInfo.health;
-        _moveSpeed = _enemyInfo.moveSpeed;
+        enemyData = enemyDatas[index];
+        _attack = enemyData.attack;
+        _initialHealthValue = enemyData.health;
+        _moveSpeed = enemyData.moveSpeed;
+        
+        health.InitializeHealth(_initialHealthValue);
+        spriteRenderer.sprite = enemyData.enemySprite;
     }
 
     private void AttackToPlayer(float attackPoint)
     {
-        EventManager.OnEnemyAttackEvent?.Invoke(attackPoint);
+        if (_target.TryGetComponent<Player>(out var player))
+        {
+            player.health.GetHit(attackPoint);
+        }
     }
 
-    private void TakeDamage(float damage)
+    public void Death()
     {
-        _health -= damage;
-        if( _health <= 0)
-        {
-            Destroy(gameObject);
+        Destroy(gameObject);
 
-            int earnedGoldCount = (int)_enemyInfo.health;
-            GameManager.Instance.UpdateGoldCount(earnedGoldCount);
+        int earnedGoldCount = (int)enemyData.health;
+        GameManager.Instance.UpdateGoldCount(earnedGoldCount);
 
-            GameManager.DefeatedEnemyCount++;
-        }
+        GameManager.DefeatedEnemyCount++;
     }
 }

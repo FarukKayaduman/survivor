@@ -34,7 +34,7 @@ public class PlayerSkillManager : MonoBehaviour
         if (ShotFrequencyLevel < 11 && _shotFrequencyUpgradeUnlocked)
         {
             float shotFrequencyIncrementAmount = 0.1f;
-            PlayerController.FireRate -= shotFrequencyIncrementAmount;
+            Player.FireRate -= shotFrequencyIncrementAmount;
             GameManager.Instance.UpdateGoldCount(-ShotFrequencyIncrementCost);
             ShotFrequencyLevel++;
             ShotFrequencyIncrementCost = (int)(ShotFrequencyIncrementCost * 1.1f);

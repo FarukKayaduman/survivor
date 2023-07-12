@@ -28,7 +28,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            WinGame();
+            // Win status implementation
+            StopGame();
         }
     }
 
@@ -43,17 +44,8 @@ public class GameManager : MonoBehaviour
         EventManager.OnTimeUpdateEvent?.Invoke(leftTime);
     }
 
-    private void WinGame()
+    public void StopGame()
     {
         Time.timeScale = 0.0f;
-        bool winStatus = true;
-        EventManager.OnEndGameEvent?.Invoke(winStatus, DefeatedEnemyCount);
-    }
-
-    public void LoseGame()
-    {
-        Time.timeScale = 0.0f;
-        bool winStatus = false;
-        EventManager.OnEndGameEvent?.Invoke(winStatus, DefeatedEnemyCount);
     }
 }

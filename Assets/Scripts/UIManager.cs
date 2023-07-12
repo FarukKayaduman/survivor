@@ -1,4 +1,5 @@
 using System;
+using ScriptableObjects.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,37 +21,35 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _deadImage;
     [SerializeField] private GameObject _survivedImage;
 
+    [SerializeField] private PlayerSO playerData;
+    
     private void OnEnable()
     {
-        EventManager.OnHealthUpdateEvent += UpdateHealthSlider;
-        EventManager.OnTimeUpdateEvent += UpdateTimeText;
-        EventManager.OnGoldUpdateEvent += UpdateGoldText;
+        EventManager.OnTimeUpdateEvent += SetTimeText;
+        EventManager.OnGoldUpdateEvent += SetGoldText;
         EventManager.OnSkillAvailabilityUpdateEvent += UpdateSkillsStatus;
-        EventManager.OnEndGameEvent += EndGamePanel;
     }
 
     private void OnDisable()
     {
-        EventManager.OnHealthUpdateEvent -= UpdateHealthSlider;
-        EventManager.OnTimeUpdateEvent -= UpdateTimeText;
-        EventManager.OnGoldUpdateEvent -= UpdateGoldText;
+        EventManager.OnTimeUpdateEvent -= SetTimeText;
+        EventManager.OnGoldUpdateEvent -= SetGoldText;
         EventManager.OnSkillAvailabilityUpdateEvent -= UpdateSkillsStatus;
-        EventManager.OnEndGameEvent -= EndGamePanel;
     }
 
-    private void UpdateHealthSlider(float health)
+    public void SetHealthSlider()
     {
-        _healthSlider.value = health;
+        _healthSlider.value = playerData.health;
     }
 
-    private void UpdateTimeText(float leftTime)
+    private void SetTimeText(float leftTime)
     {
         TimeSpan timeSpan = TimeSpan.FromSeconds(leftTime);
         string formattedTime = string.Format("{0}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
         _timeText.text = formattedTime;
     }
 
-    private void UpdateGoldText(int goldCount)
+    private void SetGoldText(int goldCount)
     {
         _goldText.text = goldCount.ToString();
     }
@@ -73,14 +72,24 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void EndGamePanel(bool winStatus, int defeatedEnemyCount)
+    public void ActivateLosePanel()
     {
         _endGamePanel.SetActive(true);
 
-        _deadImage.SetActive(!winStatus);
-        _survivedImage.SetActive(winStatus);
+        _deadImage.SetActive(true);
+        _survivedImage.SetActive(false);
         
-        _defeatedEnemyCountText.text = defeatedEnemyCount.ToString();
+        _defeatedEnemyCountText.text = GameManager.DefeatedEnemyCount.ToString();
+    }
+    
+    public void ActivateWinPanel()
+    {
+        _endGamePanel.SetActive(true);
+
+        _deadImage.SetActive(false);
+        _survivedImage.SetActive(true);
+        
+        _defeatedEnemyCountText.text = GameManager.DefeatedEnemyCount.ToString();
     }
 
     public void StartGame()

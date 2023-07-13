@@ -1,15 +1,10 @@
-using System.Collections.Generic;
 using HealthSystem;
 using ScriptableObjects.Enemy;
-using ScriptableObjects.GameEvent;
 using ScriptableObjects.Player;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private GameEvent onDeath;
-    [SerializeField] private GameEvent onHit;
-    [SerializeField] private List<EnemySO> enemyDatas;
     [SerializeField] private PlayerSO playerData;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
@@ -17,7 +12,7 @@ public class Enemy : MonoBehaviour
 
     private Transform _target; // Reference to the _target transform (character)
 
-    public EnemySO enemyData;
+    [HideInInspector] public EnemySO enemyData;
 
     private float _attack;
     private float _initialHealthValue;
@@ -25,12 +20,6 @@ public class Enemy : MonoBehaviour
 
     private readonly float _attackDelay = 1.0f;
     private float _timer;
-
-    private void Awake()
-    {
-        int randomIndex = Random.Range(0, enemyDatas.Count);
-        SetEnemyInfo(randomIndex);
-    }
 
     private void Start()
     {
@@ -79,9 +68,8 @@ public class Enemy : MonoBehaviour
         this._target = target;
     }
 
-    private void SetEnemyInfo(int index)
+    public void SetEnemyInfo()
     {
-        enemyData = enemyDatas[index];
         _attack = enemyData.attack;
         _initialHealthValue = enemyData.health;
         _moveSpeed = enemyData.moveSpeed;

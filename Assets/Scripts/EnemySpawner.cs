@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private List<EnemySO> enemyInfos;
+    [SerializeField] private List<EnemySO> enemyDatas;
     [SerializeField] private GameObject enemyPrefab;
 
     [SerializeField] private Transform target; // Reference to the character's transform
-    [SerializeField] private Transform enemyContainer;
-
-    private int _enemiesCount;
 
     private float _spawnInterval = 2.25f; // Time between each enemy spawn
     private float _spawningTimer; // Timer to control enemy spawning
@@ -45,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
         float difficultyIncreaseMultiplier = 0.1f;
         if(_difficultyIncreaseTimer >= difficultyIncreaseInterval)
         {
-            foreach (EnemySO enemy in enemyInfos)
+            foreach (EnemySO enemy in enemyDatas)
             {
                 enemy.health *= (1 + difficultyIncreaseMultiplier);
             }
@@ -58,21 +55,23 @@ public class EnemySpawner : MonoBehaviour
     {
         // Determine a random position outside the screen
         Vector3 spawnPosition = GetRandomSpawnPosition();
-
+        int randomIndex = Random.Range(0, enemyDatas.Count);
+        
         GameObject spawningEnemy = enemyPrefab;
 
         // Instantiate the enemy at the spawn position
-        GameObject newEnemy = Instantiate(spawningEnemy, spawnPosition, Quaternion.identity, enemyContainer);
-        _enemiesCount++;
+        GameObject newEnemy = Instantiate(spawningEnemy, spawnPosition, Quaternion.identity);
 
         // Set the enemy's _target as the character
         if (newEnemy.TryGetComponent<Enemy>(out var enemy))
         {
             enemy.SetTarget(target);
+            enemy.enemyData = enemyDatas[randomIndex];
+            enemy.SetEnemyInfo();
         }
     }
 
-    private Vector3 GetRandomSpawnPosition()
+    private static Vector3 GetRandomSpawnPosition()
     {
         // Determine the screen bounds
         Camera mainCamera = Camera.main;

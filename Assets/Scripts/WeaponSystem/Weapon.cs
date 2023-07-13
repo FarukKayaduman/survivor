@@ -6,45 +6,37 @@ namespace WeaponSystem
     public class Weapon : MonoBehaviour
     {
         [SerializeField] private GameObject bulletPrefab;
-        private bool _shootingDelayed;
-        private readonly float _bulletSpeed; 
-        private readonly float _shootingRange;
+        private bool timeToShoot = true;
+        private float _bulletSpeed = 80.0f; 
+        private float _shootingRange = 2.0f;
         private Transform _target;
         private float _timer; // Timer to control shooting frequency
         public static float FireRate = 2.0f; // Time between each shot
-        private float BulletDamage = 10.0f;
+        private float _bulletDamage = 10.0f;
 
         public void PerformAttack()
         {
-            if(!_shootingDelayed) return;
+            if(!timeToShoot) return;
 
             FindNearestEnemy();
-            
-            _shootingDelayed = true;
-            
-            Vector2 targetDirection;
-            Quaternion bulletQuaternion;
 
-            if (Vector3.Distance(_target.transform.position, transform.position) <= _shootingRange)
+            Vector2 targetDirection = transform.right.normalized;
+            Debug.Log("1: " + targetDirection);
+            Quaternion bulletQuaternion = Quaternion.Euler(transform.up - new Vector3(0, 0, 90f));
+
+            
+            if (_target != null && Vector3.Distance(_target.transform.position, transform.position) <= _shootingRange)
             {
-                targetDirection = _target.transform.position - transform.position;
+                targetDirection = (_target.transform.position - transform.position).normalized;
+                Debug.Log("2: " + targetDirection);
+
                 float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
                 bulletQuaternion = Quaternion.Euler(new(0, 0, angle));
             }
-            else
-            {
-                var transform1 = transform;
-                targetDirection = transform1.right;
-                bulletQuaternion = Quaternion.Euler(transform1.up - new Vector3(0, 0, 90f));
-            }
 
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, bulletQuaternion);
+            Instantiate(bulletPrefab, transform.position, bulletQuaternion);
 
-            bullet.GetComponent<Rigidbody2D>().AddForce(targetDirection * _bulletSpeed);
-
-            float bulletLifeTime = 5.0f;
-            Destroy(bullet, bulletLifeTime);
-
+            timeToShoot = false;
             StartCoroutine(DelayShooting());
         }
         
@@ -74,7 +66,7 @@ namespace WeaponSystem
         private IEnumerator DelayShooting()
         {
             yield return new WaitForSeconds(FireRate);
-            _shootingDelayed = false;
+            timeToShoot = true;
         }
         
     }

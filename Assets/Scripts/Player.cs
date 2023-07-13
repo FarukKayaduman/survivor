@@ -1,4 +1,3 @@
-using System;
 using HealthSystem;
 using ScriptableObjects.Player;
 using UnityEngine;
@@ -6,29 +5,16 @@ using WeaponSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform bulletContainer;
     [SerializeField] private Rigidbody2D rb2D;
     [SerializeField] private PlayerSO playerData;
+    [SerializeField] private Weapon weapon;
     
-    private readonly float _initialHealthValue;
-    private readonly float _shootingRange;
-    private readonly float _bulletSpeed;
+    private readonly float _initialHealthValue = 100.0f;
 
     private Transform _target;
     private float _timer; // Timer to control shooting frequency
 
-    public static float FireRate = 2.0f; // Time between each shot
-
-    [SerializeField] private Weapon weapon;
     public Health health;
-
-    public Player()
-    {
-        _initialHealthValue = 100.0f;
-        _shootingRange = 2.0f;
-        _bulletSpeed = 100.0f;
-    }
 
     private void OnEnable()
     {
@@ -38,21 +24,9 @@ public class Player : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        _timer = FireRate;
-    }
-
     private void Update()
     {
-        // FindNearestEnemy();
-        //
-        // _timer -= Time.deltaTime;
-        
-        if (_timer <= 0f && _target != null)
-        {
-            weapon.PerformAttack();
-        }
+        weapon.PerformAttack();
 
         // Read the keyboard inputs
         float moveHorizontal = Input.GetAxis("Horizontal");

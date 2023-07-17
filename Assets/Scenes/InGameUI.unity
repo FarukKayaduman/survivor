@@ -2298,7 +2298,8 @@ MonoBehaviour:
   _endGamePanel: {fileID: 1405599168}
   _deadImage: {fileID: 1594778943}
   _survivedImage: {fileID: 1658757523}
-  playerData: {fileID: 11400000, guid: d3e910f0b2b6b8d488d9f36448c5c209, type: 2}
+  playerData: {fileID: 11400000, guid: 5f9167a560f45a84fb3089c751414646, type: 2}
+  loadingScene: {fileID: 102900000, guid: bf33254c4ae1e0846a1ca3caed82da0c, type: 3}
 --- !u!114 &1544582255
 MonoBehaviour:
   m_ObjectHideFlags: 0

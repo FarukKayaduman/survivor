@@ -1,7 +1,9 @@
 using System;
-using ScriptableObjects.Player;
+using ScriptableObjects.Character;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -21,7 +23,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _deadImage;
     [SerializeField] private GameObject _survivedImage;
 
-    [SerializeField] private PlayerSO playerData;
+    [SerializeField] private CharacterSO playerData;
+    [SerializeField] private SceneAsset loadingScene;
     
     private void OnEnable()
     {
@@ -100,7 +103,7 @@ public class UIManager : MonoBehaviour
 
     public void RestartGame()
     {
-        Time.timeScale = 1.0f; 
-        SceneLoader.StartGame();
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene(loadingScene.name);
     }
 }

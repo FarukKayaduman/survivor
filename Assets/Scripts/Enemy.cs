@@ -1,26 +1,15 @@
-using HealthSystem;
-using ScriptableObjects.Enemy;
-using ScriptableObjects.Player;
+using ScriptableObjects.Character;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Character
 {
-    [SerializeField] private PlayerSO playerData;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-
-    [SerializeField] private Health health;
+    [SerializeField] private CharacterSO playerData;
 
     private Transform _target; // Reference to the _target transform (character)
-
-    [HideInInspector] public EnemySO enemyData;
-
-    private float _attack;
-    private float _initialHealthValue;
-    private float _moveSpeed;
-
+    
     private readonly float _attackDelay = 1.0f;
     private float _timer;
-
+    
     private void Start()
     {
         _timer = _attackDelay;
@@ -41,13 +30,13 @@ public class Enemy : MonoBehaviour
         float distanceBetweenTargetAndEnemy = Vector3.Distance(transform.position, _target.transform.position);
         if (distanceBetweenTargetAndEnemy > offset)
         {
-            transform.Translate(_moveSpeed * Time.deltaTime * direction);
+            transform.Translate(MoveSpeed * Time.deltaTime * direction);
         }
         else
         {
             if (_timer <= 0f)
             {
-                AttackToPlayer(_attack);
+                AttackToPlayer(Damage);
                 _timer = _attackDelay;
             }
         }
@@ -55,43 +44,32 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if the bullet hits an enemy
-        if (collision.CompareTag("Bullet"))
+        if (collision.TryGetComponent<Bullet>(out var bullet))
         {
-            health.GetHit(playerData.defaultWeaponDamage);
-            Destroy(collision.gameObject);
+            GetHit(playerData.defaultDamage);
         }
     }
 
     public void SetTarget(Transform target)
     {
-        this._target = target;
-    }
-
-    public void SetEnemyInfo()
-    {
-        _attack = enemyData.attack;
-        _initialHealthValue = enemyData.health;
-        _moveSpeed = enemyData.moveSpeed;
-        
-        health.InitializeHealth(_initialHealthValue);
-        spriteRenderer.sprite = enemyData.enemySprite;
+        _target = target;
     }
 
     private void AttackToPlayer(float attackPoint)
     {
         if (_target.TryGetComponent<Player>(out var player))
         {
-            player.health.GetHit(attackPoint);
+            player.GetHit(attackPoint);
         }
     }
 
-    public void Death()
+    protected override void OnDeath()
     {
-        Destroy(gameObject);
+        EnemySpawner.Instance.ReleaseItem(this);
+        gameObject.SetActive(false);
 
-        int earnedGoldCount = (int)enemyData.health;
-        GameManager.Instance.UpdateGoldCount(earnedGoldCount);
+        int earnedGoldCount = (int)characterData.currentHealth;
+        GameManager.Instance.IncreaseGoldCount(earnedGoldCount);
 
         GameManager.DefeatedEnemyCount++;
     }

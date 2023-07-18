@@ -1,74 +1,82 @@
+using System.Collections;
 using System.Collections.Generic;
-using ScriptableObjects.Enemy;
+using ScriptableObjects.Character;
 using UnityEngine;
+using Random = UnityEngine.Random;
+using ObjectPool;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : ObjectPool<Enemy>
 {
-    [SerializeField] private List<EnemySO> enemyDatas;
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private List<CharacterSO> enemyData;
 
-    [SerializeField] private Transform target; // Reference to the character's transform
+    [SerializeField] private Transform target;
 
-    private float _spawnInterval = 2.25f; // Time between each enemy spawn
-    private float _spawningTimer; // Timer to control enemy spawning
-    private float _difficultyIncreaseTimer; // Timer to control difficulty increase
+    private const int PoolDefaultCapacity = 10;
+    private const int PoolMaxSize = 30;
+
+    private float _currentEnemyHealth;
+    
+    private const float InitialSpawnInterval = 2.25f;
+    private float _currentSpawnInterval;
+
+    private const float DifficultyIncreaseInterval = 10.0f;
+
+    public static EnemySpawner Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+
+        SetPool(objectPrefab, PoolDefaultCapacity, PoolMaxSize);
+
+        _currentSpawnInterval = InitialSpawnInterval;
+    }
 
     private void Start()
     {
-        // Start the _spawningTimer
-        _spawningTimer = _spawnInterval;
-
-        // Find the character
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        StartCoroutine(SpawnCoroutine());
+        StartCoroutine(IncreaseSpawnIntervalCoroutine());
     }
 
-    private void Update()
+    private IEnumerator SpawnCoroutine()
     {
-        // Decrement the _spawningTimer
-        _spawningTimer -= Time.deltaTime;
-        _difficultyIncreaseTimer += Time.deltaTime;
-
-        // Check if it's time to spawn an enemy
-        if (_spawningTimer <= 0f)
+        // TODO: Refactor this when using state machine
+        while (true)
         {
+            yield return new WaitForSeconds(_currentSpawnInterval);
             SpawnEnemy();
-
-            // Reset the _spawningTimer
-            _spawningTimer = _spawnInterval;
-        }
-
-        // Check if it's time to increase enemy's health and decrease spawn interval
-        float difficultyIncreaseInterval = 15.0f;
-        float difficultyIncreaseMultiplier = 0.1f;
-        if(_difficultyIncreaseTimer >= difficultyIncreaseInterval)
-        {
-            foreach (EnemySO enemy in enemyDatas)
-            {
-                enemy.health *= (1 + difficultyIncreaseMultiplier);
-            }
-            _spawnInterval *= (1 - difficultyIncreaseMultiplier);
-            _difficultyIncreaseTimer = 0f;
         }
     }
-
-    private void SpawnEnemy()
+    
+    private IEnumerator IncreaseSpawnIntervalCoroutine()
     {
-        // Determine a random position outside the screen
-        Vector3 spawnPosition = GetRandomSpawnPosition();
-        int randomIndex = Random.Range(0, enemyDatas.Count);
+        float difficultyIncreaseMultiplier = 0.1f;
         
-        GameObject spawningEnemy = enemyPrefab;
-
-        // Instantiate the enemy at the spawn position
-        GameObject newEnemy = Instantiate(spawningEnemy, spawnPosition, Quaternion.identity);
-
-        // Set the enemy's _target as the character
-        if (newEnemy.TryGetComponent<Enemy>(out var enemy))
+        while (true)
         {
-            enemy.SetTarget(target);
-            enemy.enemyData = enemyDatas[randomIndex];
-            enemy.SetEnemyInfo();
+            yield return new WaitForSeconds(DifficultyIncreaseInterval);
+            
+            foreach (CharacterSO enemy in enemyData)
+            {
+                enemy.currentHealth *= (1 + difficultyIncreaseMultiplier);
+            }
+            
+            _currentSpawnInterval *= (1 - difficultyIncreaseMultiplier);
         }
+    }
+    
+    public void SpawnEnemy()
+    {
+        int randomIndex = Random.Range(0, enemyData.Count);
+        
+        // Instantiate the enemy at the spawn position
+        Enemy enemy = GetItem();
+        enemy.transform.position = GetRandomSpawnPosition();
+        enemy.transform.rotation = Quaternion.identity;
+        enemy.SetTarget(target);
+        enemy.SetCharacterInfo(enemyData[randomIndex]);
+        enemy.gameObject.SetActive(true);
     }
 
     private static Vector3 GetRandomSpawnPosition()

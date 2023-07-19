@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7618436979538262014}
   - component: {fileID: 3906157655943606387}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BulletVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5225865541825562119}
   - component: {fileID: 1601492767130920410}
   - component: {fileID: 2752400009752710635}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -168,3 +168,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0e816443386f646a3ccbcba150be79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb2D: {fileID: 1601492767130920410}

@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
 
     public void SetHealthSlider()
     {
-        _healthSlider.value = playerData.health;
+        _healthSlider.value = playerData.currentHealth;
     }
 
     private void SetTimeText(float leftTime)
@@ -61,8 +61,8 @@ public class UIManager : MonoBehaviour
     {
         PlayerSkillManager.Instance.UpgradeShotFrequencyAbility();
 
-        _shotFrequencyLevelText.text = "Level: " + PlayerSkillManager.ShotFrequencyLevel.ToString();
-        _shotFrequencyCostText.text = "Cost: " + PlayerSkillManager.ShotFrequencyIncrementCost.ToString();
+        _shotFrequencyLevelText.text = "Level: " + PlayerSkillManager.ShotFrequencyLevel;
+        _shotFrequencyCostText.text = "Cost: " + PlayerSkillManager.ShotFrequencyIncrementCost;
     }
 
     private void UpdateSkillsStatus(bool shotFrequencyStatus)

@@ -1,10 +1,12 @@
+using ScriptableObjects.GameEvent;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameEvent onPlayerWin;
     private int _goldCount;
     private float _passedTime;
-    private readonly float _timeGoal = 60.0f;
+    private const float TimeGoal = 60.0f;
 
     public static int DefeatedEnemyCount;
 
@@ -20,20 +22,20 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(_passedTime < _timeGoal)
+        if(_passedTime < TimeGoal)
         {
             _passedTime += Time.deltaTime;
-            float leftTime = _timeGoal - _passedTime;
+            float leftTime = TimeGoal - _passedTime;
             UpdateTimeInfo(leftTime);
         }
         else
         {
-            // Win status implementation
+            onPlayerWin.Raise();
             StopGame();
         }
     }
 
-    public void UpdateGoldCount(int gettingGoldCount)
+    public void IncreaseGoldCount(int gettingGoldCount)
     {
         _goldCount += gettingGoldCount;
         EventManager.OnGoldUpdateEvent?.Invoke(_goldCount);

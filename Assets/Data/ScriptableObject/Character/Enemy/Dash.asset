@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e9a89e84a75f014294fb5d9e950b93c, type: 3}
-  m_Name: PlayerAda
+  m_Script: {fileID: 11500000, guid: 56cdde6e1cf043bba336e746ab7ce21f, type: 3}
+  m_Name: Dash
   m_EditorClassIdentifier: 
-  name: Ada
-  health: 100
-  moveSpeed: 2
-  defaultWeaponDamage: 10
+  name: Dash
+  currentHealth: 11
+  defaultHealth: 10
+  moveSpeed: 1
+  defaultDamage: 10
+  sprite: {fileID: -2092964637, guid: 4104ee12b4d54f54b91b3ba875787837, type: 3}

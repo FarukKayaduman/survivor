@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5dc9e5ec37c1314393a1810a5badb54, type: 3}
-  m_Name: Tank
+  m_Script: {fileID: 11500000, guid: f07c5b0c49d84622b1188bfb49685696, type: 3}
+  m_Name: OnPlayerWin
   m_EditorClassIdentifier: 
-  name: Tank
-  attack: 8
-  health: 20
-  moveSpeed: 0.5
-  enemySprite: {fileID: 1782705385, guid: d33598d781682e049a53a0a13104ef29, type: 3}

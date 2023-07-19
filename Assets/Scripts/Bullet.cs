@@ -1,14 +1,27 @@
+using ObjectPool;
 using UnityEngine;
+using WeaponSystem;
 
 public class Bullet : MonoBehaviour
 {
-    private const float BulletSpeed = 100.0f;
+    [SerializeField] private Rigidbody2D rb2D;
+    
+    private const float BulletSpeed = 3.0f;
 
-    private void Start()
+    public void SetVelocity()
     {
-        GetComponent<Rigidbody2D>().AddForce(transform.up * BulletSpeed);
-        
-        const float bulletLifeTime = 5.0f;
-        Destroy(gameObject, bulletLifeTime);
+        rb2D.velocity = (transform.up * BulletSpeed);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.TryGetComponent<Enemy>(out var enemy))
+        {
+            Weapon.Instance.ReleaseItem(this);
+            gameObject.SetActive(false);
+            
+            if (enemy.CurrentHealth <= 0)
+                EnemySpawner.Instance.ReleaseItem(enemy);
+        }
     }
 }

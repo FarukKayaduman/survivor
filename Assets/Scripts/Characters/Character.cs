@@ -45,12 +45,12 @@ namespace Characters
 
         protected virtual void OnDeath()
         {
-            onDeath.Raise();
+            onDeath.Invoke();
         }
 
         private void OnHit()
         {
-            onHit.Raise();
+            onHit.Invoke();
         }
     }
 }

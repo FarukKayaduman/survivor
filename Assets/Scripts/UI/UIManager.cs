@@ -10,6 +10,8 @@ namespace UI
 {
     public class UIManager : MonoBehaviour
     {
+        [SerializeField] private GameDataSO gameData;
+        
         [SerializeField] private Slider _healthSlider;
         [SerializeField] private TextMeshProUGUI _goldText;
         [SerializeField] private TextMeshProUGUI _timeText;
@@ -30,16 +32,17 @@ namespace UI
     
         private void OnEnable()
         {
-            EventManager.OnTimeUpdateEvent += SetTimeText;
-            EventManager.OnGoldUpdateEvent += SetGoldText;
             EventManager.OnSkillAvailabilityUpdateEvent += UpdateSkillsStatus;
         }
 
         private void OnDisable()
         {
-            EventManager.OnTimeUpdateEvent -= SetTimeText;
-            EventManager.OnGoldUpdateEvent -= SetGoldText;
             EventManager.OnSkillAvailabilityUpdateEvent -= UpdateSkillsStatus;
+        }
+
+        private void Start()
+        {
+            SetTimeText();
         }
 
         public void SetHealthSlider()
@@ -47,16 +50,16 @@ namespace UI
             _healthSlider.value = playerData.currentHealth;
         }
 
-        private void SetTimeText(float leftTime)
+        public void SetTimeText()
         {
-            TimeSpan timeSpan = TimeSpan.FromSeconds(leftTime);
-            string formattedTime = string.Format("{0}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
+            TimeSpan timeSpan = TimeSpan.FromSeconds(gameData.CurrentTime);
+            string formattedTime = $"{(int)timeSpan.TotalMinutes}:{timeSpan.Seconds:00}";
             _timeText.text = formattedTime;
         }
 
-        private void SetGoldText(int goldCount)
+        public void SetGoldText()
         {
-            _goldText.text = goldCount.ToString();
+            _goldText.text = gameData.CurrentGoldCount.ToString();
         }
 
         public void UpgradeShotFrequency()
@@ -84,7 +87,7 @@ namespace UI
             _deadImage.SetActive(true);
             _survivedImage.SetActive(false);
         
-            _defeatedEnemyCountText.text = GameManager.DefeatedEnemyCount.ToString();
+            _defeatedEnemyCountText.text = gameData.CurrentDefeatedEnemyCount.ToString();
         }
     
         public void ActivateWinPanel()
@@ -94,12 +97,14 @@ namespace UI
             _deadImage.SetActive(false);
             _survivedImage.SetActive(true);
         
-            _defeatedEnemyCountText.text = GameManager.DefeatedEnemyCount.ToString();
+            _defeatedEnemyCountText.text = gameData.CurrentDefeatedEnemyCount.ToString();
         }
 
         public void StartGame()
         {
             _startGamePanel.SetActive(false);
+            GameManager.Instance.FirstStart = false;
+            gameData.ResetValues();
             Time.timeScale = 1.0f;
         }
 

@@ -150,4 +150,5 @@ MonoBehaviour:
   onHit: {fileID: 11400000, guid: aa40dbd7804ed5e4e9c5aed2def8d03b, type: 2}
   characterData: {fileID: 0}
   spriteRenderer: {fileID: 8939239244599772287}
+  gameData: {fileID: 11400000, guid: 625fb2cc7038b0149b85bd45689996d0, type: 2}
   playerData: {fileID: 11400000, guid: 5f9167a560f45a84fb3089c751414646, type: 2}

@@ -1,14 +1,19 @@
+using System.Collections;
 using ScriptableObjects.GameEvent;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameEvent onPlayerWin;
-    private int _goldCount;
-    private float _passedTime;
-    private const float TimeGoal = 60.0f;
+    [SerializeField] private GameDataSO gameData;
 
-    public static int DefeatedEnemyCount;
+    [SerializeField] private GameEvent onPlayerWin;
+
+    private bool _timerStarted;
+    private float _passedTime;
+
+    private Coroutine _timerCoroutine;
+
+    [HideInInspector] public bool FirstStart = true;
 
     public static GameManager Instance;
 
@@ -20,34 +25,54 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0.0f;
     }
 
+    private void Start()
+    {
+        gameData.CurrentTime = gameData.DefaultTime;
+        StartTimer();
+    }
+
     private void Update()
     {
-        if(_passedTime < TimeGoal)
+        if (gameData.CurrentTime > 0 || FirstStart)
+            return;
+        
+        onPlayerWin.Invoke();
+        StopGame();
+    }
+
+    private void StartTimer()
+    {
+        if(_timerStarted)
+            return;
+
+        _timerCoroutine = StartCoroutine(StartTimerCount());
+        _timerStarted = true;
+    }
+
+    private IEnumerator StartTimerCount()
+    {
+        while(true)
         {
-            _passedTime += Time.deltaTime;
-            float leftTime = TimeGoal - _passedTime;
-            UpdateTimeInfo(leftTime);
+            yield return new WaitForSeconds(1f);
+            gameData.CurrentTime--;
         }
-        else
-        {
-            onPlayerWin.Raise();
-            StopGame();
-        }
+        // ReSharper disable once IteratorNeverReturns
+    }
+    
+    private void StopTimer()
+    {
+        if(_timerStarted)
+            StopCoroutine(_timerCoroutine);
     }
 
     public void IncreaseGoldCount(int gettingGoldCount)
     {
-        _goldCount += gettingGoldCount;
-        EventManager.OnGoldUpdateEvent?.Invoke(_goldCount);
-    }
-
-    private void UpdateTimeInfo(float leftTime)
-    {
-        EventManager.OnTimeUpdateEvent?.Invoke(leftTime);
+        gameData.CurrentGoldCount += gettingGoldCount;
     }
 
     public void StopGame()
     {
         Time.timeScale = 0.0f;
+        StopTimer();
     }
 }

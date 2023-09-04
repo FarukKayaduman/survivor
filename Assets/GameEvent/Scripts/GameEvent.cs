@@ -8,7 +8,7 @@ namespace ScriptableObjects.GameEvent
     {
         private readonly List<GameEventListener> _listeners = new List<GameEventListener>();
 
-        public void Raise()
+        public void Invoke()
         {
             for (int i = _listeners.Count - 1; i >= 0; i--)
             {

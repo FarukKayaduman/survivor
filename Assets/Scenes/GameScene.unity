@@ -476,6 +476,7 @@ GameObject:
   - component: {fileID: 6628182259778745670}
   - component: {fileID: 6628182259778745673}
   - component: {fileID: 6628182259778745672}
+  - component: {fileID: 6628182259778745674}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -653,6 +654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1097636d53596064b901bd25115ceaa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: 625fb2cc7038b0149b85bd45689996d0, type: 2}
   onPlayerWin: {fileID: 11400000, guid: d40c8da6c8fcfba4ab2b8f7e7bb88ba0, type: 2}
 --- !u!1 &1958618078
 GameObject:
@@ -720,6 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4978ca8937e70b34dbfee706d0206307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: 625fb2cc7038b0149b85bd45689996d0, type: 2}
 --- !u!114 &6628182259778745672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +770,34 @@ MonoBehaviour:
       - m_Target: {fileID: 1891270827}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: StopGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6628182259778745674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085479273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420f2587f2e64e3cb7ff63ef91895af0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8f308f81a58bfa24cbbb72e1403c1fdb, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6628182259778745670}
+        m_TargetAssemblyTypeName: Characters.PlayerSkillManager, Assembly-CSharp
+        m_MethodName: CheckForSkillCosts
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

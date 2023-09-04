@@ -5,6 +5,7 @@ namespace Characters
 {
     public class Enemy : Character
     {
+        [SerializeField] private GameDataSO gameData;
         [SerializeField] private CharacterSO playerData;
 
         private Transform _target; // Reference to the _target transform (character)
@@ -73,7 +74,7 @@ namespace Characters
             int earnedGoldCount = (int)characterData.currentHealth;
             GameManager.Instance.IncreaseGoldCount(earnedGoldCount);
 
-            GameManager.DefeatedEnemyCount++;
+            gameData.CurrentDefeatedEnemyCount++;
         }
     }
 }

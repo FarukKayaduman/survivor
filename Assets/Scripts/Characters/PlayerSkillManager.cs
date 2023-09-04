@@ -5,6 +5,8 @@ namespace Characters
 {
     public class PlayerSkillManager : MonoBehaviour
     {
+        [SerializeField] private GameDataSO gameData;
+
         private bool _shotFrequencyUpgradeUnlocked;
 
         public static int ShotFrequencyLevel;
@@ -20,14 +22,7 @@ namespace Characters
 
         private void Start()
         {
-            EventManager.OnGoldUpdateEvent += CheckForSkillCosts;
-
             ShotFrequencyIncrementCost = 20;
-        }
-
-        private void OnDisable()
-        {
-            EventManager.OnGoldUpdateEvent -= CheckForSkillCosts;
         }
 
         public void UpgradeShotFrequencyAbility()
@@ -43,10 +38,10 @@ namespace Characters
             }
         }
 
-        private void CheckForSkillCosts(int goldCount)
+        public void CheckForSkillCosts()
         {
             // Skill 1: Shot frequency increment
-            if(goldCount > ShotFrequencyIncrementCost)
+            if(gameData.CurrentGoldCount > ShotFrequencyIncrementCost)
             {
                 _shotFrequencyUpgradeUnlocked = true;
                 EventManager.OnSkillAvailabilityUpdateEvent?.Invoke(true);

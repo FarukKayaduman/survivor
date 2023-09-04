@@ -6,7 +6,7 @@ namespace ObjectPool
     public abstract class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
     {
         private readonly List<T> _activePool = new();
-        private Queue<T> _passivePool = new();
+        private readonly Queue<T> _passivePool = new();
         [SerializeField] protected T objectPrefab;
         [SerializeField] private Transform objectContainer;
 
@@ -14,6 +14,8 @@ namespace ObjectPool
         private int _maxSize;
 
         private int _totalCreatedObjectCount;
+        
+        public List<T> ActivePool => _activePool;
 
         protected void SetPool(T objectPrefab, int defaultCapacity, int maxSize)
         {
@@ -21,7 +23,7 @@ namespace ObjectPool
             _defaultCapacity = defaultCapacity;
             _maxSize = maxSize;
 
-            for(int i = 0; i < defaultCapacity; i++)
+            for(int i = 0; i < _defaultCapacity; i++)
                     CreateAnInstance();
         }
         

@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Characters;
 using ObjectPool;
 using UnityEngine;
 
-namespace WeaponSystem
+namespace Attack
 {
     public class Weapon : ObjectPool<Bullet>
     {

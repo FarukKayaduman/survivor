@@ -21,14 +21,12 @@ namespace UI
         [SerializeField] private TextMeshProUGUI _shotFrequencyLevelText;
         [SerializeField] private TextMeshProUGUI _shotFrequencyCostText;
 
-        [SerializeField] private GameObject _startGamePanel;
-
         [SerializeField] private GameObject _endGamePanel;
         [SerializeField] private GameObject _deadImage;
         [SerializeField] private GameObject _survivedImage;
 
         [SerializeField] private CharacterSO playerData;
-        [SerializeField] private SceneAsset loadingScene;
+        [SerializeField] private SceneAsset mainScene;
     
         private void OnEnable()
         {
@@ -42,6 +40,8 @@ namespace UI
 
         private void Start()
         {
+            GameManager.Instance.FirstStart = false;
+            gameData.ResetValues();
             SetTimeText();
         }
 
@@ -100,18 +100,10 @@ namespace UI
             _defeatedEnemyCountText.text = gameData.CurrentDefeatedEnemyCount.ToString();
         }
 
-        public void StartGame()
-        {
-            _startGamePanel.SetActive(false);
-            GameManager.Instance.FirstStart = false;
-            gameData.ResetValues();
-            Time.timeScale = 1.0f;
-        }
-
         public void RestartGame()
         {
             Time.timeScale = 1.0f;
-            SceneManager.LoadScene(loadingScene.name);
+            SceneManager.LoadScene(mainScene.name);
         }
     }
 }

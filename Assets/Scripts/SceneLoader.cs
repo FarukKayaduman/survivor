@@ -2,43 +2,39 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField] private Slider loadingSlider;
-
+    [SerializeField] private SceneAsset mainMenuScene;
     [SerializeField] private SceneAsset gameScene;
-    [SerializeField] private SceneAsset inGameUI;
     [SerializeField] private SceneAsset loadingScene;
+    
+    public static SceneLoader Instance;
+    
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
 
     private void Start()
     {
-        StartCoroutine(LoadSceneAsync());
+        LoadLoadingScene();
     }
 
-    private IEnumerator LoadSceneAsync()
+    private void LoadLoadingScene()
     {
-        yield return null;
+        SceneManager.LoadScene(loadingScene.name, LoadSceneMode.Additive);
+    }
+    
+    public IEnumerator LoadGameAsync()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(gameScene.name, LoadSceneMode.Additive);
+        operation.allowSceneActivation = false;
 
-        AsyncOperation operation1 = SceneManager.LoadSceneAsync(gameScene.name, LoadSceneMode.Additive);
-        AsyncOperation operation2 = SceneManager.LoadSceneAsync(inGameUI.name, LoadSceneMode.Additive);
+        yield return new WaitUntil(() => !operation.isDone);
         
-        operation1.allowSceneActivation = false;
-        operation2.allowSceneActivation = false;
-        
-        while (!(operation1.isDone || operation2.isDone))
-        {
-            loadingSlider.value = operation1.progress + operation2.progress;
-            
-            if (operation1.progress >= 0.9f && operation2.progress >= 0.9f)
-            {
-                operation1.allowSceneActivation = true;
-                operation2.allowSceneActivation = true;
-            }
-            
-            yield return null;
-        }
-        SceneManager.UnloadSceneAsync(loadingScene.name);
+        operation.allowSceneActivation = true;
+        SceneManager.UnloadSceneAsync(mainMenuScene.name);
     }
 }

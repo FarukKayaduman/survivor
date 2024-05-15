@@ -17,7 +17,6 @@ namespace UI
         [SerializeField] private TextMeshProUGUI _timeText;
         [SerializeField] private TextMeshProUGUI _defeatedEnemyCountText;
 
-        [SerializeField] private GameObject _shotFrequencyArea;
         [SerializeField] private TextMeshProUGUI _shotFrequencyLevelText;
         [SerializeField] private TextMeshProUGUI _shotFrequencyCostText;
 
@@ -27,16 +26,6 @@ namespace UI
 
         [SerializeField] private CharacterSO playerData;
         [SerializeField] private SceneAsset mainScene;
-    
-        private void OnEnable()
-        {
-            EventManager.OnSkillAvailabilityUpdateEvent += UpdateSkillsStatus;
-        }
-
-        private void OnDisable()
-        {
-            EventManager.OnSkillAvailabilityUpdateEvent -= UpdateSkillsStatus;
-        }
 
         private void Start()
         {
@@ -68,16 +57,6 @@ namespace UI
 
             _shotFrequencyLevelText.text = "Level: " + PlayerSkillManager.ShotFrequencyLevel;
             _shotFrequencyCostText.text = "Cost: " + PlayerSkillManager.ShotFrequencyIncrementCost;
-        }
-
-        private void UpdateSkillsStatus(bool shotFrequencyStatus)
-        {
-            switch (shotFrequencyStatus)
-            {
-                case true:
-                    _shotFrequencyArea.SetActive(true);
-                    break;
-            }
         }
 
         public void ActivateLosePanel()

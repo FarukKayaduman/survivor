@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameDataSO gameData;
 
+    [SerializeField] private GameEvent onGoldCountChanged;
     [SerializeField] private GameEvent onPlayerWin;
 
     private bool _timerStarted;
@@ -66,6 +67,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseGoldCount(int gettingGoldCount)
     {
         gameData.CurrentGoldCount += gettingGoldCount;
+        onGoldCountChanged.Invoke();
     }
 
     public void StopGame()

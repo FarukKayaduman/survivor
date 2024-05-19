@@ -3,7 +3,7 @@ guid: d71a3dc7aa20fad4f9a99fc76a9254ba
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -577,7 +578,7 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -598,7 +599,7 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -621,29 +622,29 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Select 5: -762074860
-      Select 0: -181907988
-      Select 7: -966295699
-      Front 0: 1312383074
-      Title 2: -77559378
+      Back 0: -1010605625
       Back 1: -1061235666
-      Select 3: -205726582
+      Box 0: -155058199
+      Box 1: 1777749549
+      Front 0: 1312383074
+      Front 1: -1722126508
       Icon 0: 891942287
       Joystick 0: 1328899968
-      Box 1: 1777749549
-      Box 0: -155058199
-      Front 1: -1722126508
       Joystick 1: -1798395208
-      Title 1: -1799623379
-      Select 6: -201829820
-      Select 2: -344242777
       Panel: -8390244
+      Select 0: -181907988
+      Select 1: -1786786079
+      Select 2: -344242777
+      Select 3: -205726582
+      Select 4: 563336626
+      Select 5: -762074860
+      Select 6: -201829820
+      Select 7: -966295699
+      Select 8: 927338625
       Select 9: -1002307068
       Title 0: 1315674547
-      Select 8: 927338625
-      Back 0: -1010605625
-      Select 4: 563336626
-      Select 1: -1786786079
+      Title 1: -1799623379
+      Title 2: -77559378
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

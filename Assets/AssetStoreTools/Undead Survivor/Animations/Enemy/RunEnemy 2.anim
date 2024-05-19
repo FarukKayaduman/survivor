@@ -36,7 +36,7 @@ AnimationClip:
     path: 
     classID: 212
     script: {fileID: 0}
-    flags: 0
+    flags: 2
   m_SampleRate: 12
   m_WrapMode: 0
   m_Bounds:

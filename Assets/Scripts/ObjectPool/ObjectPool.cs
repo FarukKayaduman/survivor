@@ -29,12 +29,12 @@ namespace ObjectPool
         
         private void CreateAnInstance()
         {
+            if (_totalCreatedObjectCount >= _maxSize)
+                return;
+            
             T instance = Instantiate(objectPrefab, objectContainer);
             instance.gameObject.SetActive(false);
-
-            if (_totalCreatedObjectCount < _maxSize)
-                _passivePool.Enqueue(instance);
-            
+            _passivePool.Enqueue(instance);
             _totalCreatedObjectCount++;
         }
 

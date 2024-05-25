@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Ada
   m_EditorClassIdentifier: 
   name: Ada
-  currentHealth: 80
+  currentHealth: 100
   defaultHealth: 100
-  moveSpeed: 2
+  moveSpeed: 4
   defaultDamage: 10
   sprite: {fileID: -2088749509, guid: 57a1443e67528144aa07582927559650, type: 3}

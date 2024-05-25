@@ -7,7 +7,7 @@ namespace Attack
     {
         [SerializeField] private Rigidbody2D rb2D;
     
-        private const float BulletSpeed = 3.0f;
+        private const float BulletSpeed = 6.0f;
 
         public void SetVelocity()
         {

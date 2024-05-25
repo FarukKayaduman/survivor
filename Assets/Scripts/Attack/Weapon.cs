@@ -15,7 +15,7 @@ namespace Attack
 
         private const int PoolDefaultCapacity = 10;
         private const int PoolMaxSize = 30;
-        private const float ShootingRange = 2.0f;
+        private const float ShootingRange = 4.0f;
 
         public static float FireRate = 2.0f;
         

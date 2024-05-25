@@ -5,12 +5,19 @@ namespace Characters
 {
     public class Player : Character
     {
-        
         [SerializeField] private Rigidbody2D rb2D;
         [SerializeField] private Weapon weapon;
 
         private Transform _target;
         private float _timer; // Timer to control shooting frequency
+        
+        public static Player Instance;
+
+        private void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+        }
 
         private void Update()
         {
@@ -29,7 +36,7 @@ namespace Characters
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent<Enemy>(out var enemy))
+            if (transform.CompareTag("PlayerArea") && other.TryGetComponent<Enemy>(out var enemy))
             {
                 GetHit(enemy.Damage);
             }

@@ -12,7 +12,7 @@ namespace Characters
         [SerializeField] private GameEvent onDeath;
         [SerializeField] private GameEvent onHit;
         [SerializeField] protected internal CharacterSO characterData;
-        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] protected SpriteRenderer spriteRenderer;
 
         private void Start()
         {

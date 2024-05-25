@@ -5,12 +5,17 @@ namespace Characters
 {
     public class Player : Character
     {
+        [SerializeField] private Animator animator;
         [SerializeField] private Rigidbody2D rb2D;
         [SerializeField] private Weapon weapon;
 
         private Transform _target;
         private float _timer; // Timer to control shooting frequency
-        
+
+        private Vector2 _inputVector;
+
+        private static readonly int Speed = Animator.StringToHash("Speed");
+
         public static Player Instance;
 
         private void Awake()
@@ -30,10 +35,20 @@ namespace Characters
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
 
-            Vector2 movement = new Vector2(moveHorizontal, moveVertical);
-            rb2D.velocity = movement * MoveSpeed;
+            _inputVector = new Vector2(moveHorizontal, moveVertical);
+            rb2D.velocity = _inputVector * MoveSpeed;
         }
+        
+        private void LateUpdate()
+        {
+            animator.SetFloat(Speed, _inputVector.magnitude);
+            
+            if(_inputVector.x == 0)
+                return;
 
+            spriteRenderer.flipX = _inputVector.x < 0;
+        }
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (transform.CompareTag("PlayerArea") && other.TryGetComponent<Enemy>(out var enemy))

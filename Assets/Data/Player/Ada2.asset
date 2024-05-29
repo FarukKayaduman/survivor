@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56cdde6e1cf043bba336e746ab7ce21f, type: 3}
-  m_Name: Ada
+  m_Name: Ada2
   m_EditorClassIdentifier: 
-  name: Ada
+  name: Ada2
   currentHealth: 100
   defaultHealth: 100
   moveSpeed: 4
   defaultDamage: 10
-  sprite: {fileID: 938132271, guid: 57a1443e67528144aa07582927559650, type: 3}
+  sprite: {fileID: -150523396, guid: 0c187a32c5bde4747be8d00770b07403, type: 3}

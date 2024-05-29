@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56cdde6e1cf043bba336e746ab7ce21f, type: 3}
-  m_Name: Ada
+  m_Name: Nina
   m_EditorClassIdentifier: 
-  name: Ada
-  currentHealth: 100
+  name: Nina
+  currentHealth: 76
   defaultHealth: 100
   moveSpeed: 4
   defaultDamage: 10
   sprite: {fileID: 938132271, guid: 57a1443e67528144aa07582927559650, type: 3}
+  animatorOverrideController: {fileID: 22100000, guid: 93419a34309cf974f8f5db35bebd8e5c, type: 2}

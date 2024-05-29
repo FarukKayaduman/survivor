@@ -5,7 +5,6 @@ namespace Characters
 {
     public class Player : Character
     {
-        [SerializeField] private Animator animator;
         [SerializeField] private Rigidbody2D rb2D;
         [SerializeField] private Weapon weapon;
 

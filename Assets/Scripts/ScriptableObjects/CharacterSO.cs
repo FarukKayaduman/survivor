@@ -9,4 +9,5 @@ public class CharacterSO : ScriptableObject
     public float moveSpeed;
     public float defaultDamage;
     public Sprite sprite;
+    public AnimatorOverrideController animatorOverrideController;
 }

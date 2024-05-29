@@ -13,6 +13,7 @@ namespace Characters
         [SerializeField] private GameEvent onHit;
         [SerializeField] protected internal CharacterSO characterData;
         [SerializeField] protected SpriteRenderer spriteRenderer;
+        [SerializeField] protected Animator animator;
 
         private void Start()
         {
@@ -27,6 +28,7 @@ namespace Characters
             Damage = characterData.defaultDamage;
             MoveSpeed = characterData.moveSpeed;
             spriteRenderer.sprite = characterData.sprite;
+            animator.runtimeAnimatorController = characterSO.animatorOverrideController;
         }
 
         public void GetHit(float damageValue)

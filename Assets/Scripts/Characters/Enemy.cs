@@ -28,7 +28,9 @@ namespace Characters
 
             // Calculate the direction towards the _target
             Vector3 direction = (_target.position - transform.position).normalized;
-
+            
+            spriteRenderer.flipX = direction.x < 0;
+            
             float offset = 0.25f;
             float distanceBetweenTargetAndEnemy = Vector3.Distance(transform.position, _target.transform.position);
             if (distanceBetweenTargetAndEnemy > offset)

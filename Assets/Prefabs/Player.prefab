@@ -224,7 +224,6 @@ GameObject:
   - component: {fileID: 2275241682245387974}
   - component: {fileID: 4931231468555692783}
   - component: {fileID: 2275241682245387973}
-  - component: {fileID: 2275241682245387978}
   - component: {fileID: 2275241682245387979}
   m_Layer: 8
   m_Name: Player
@@ -320,34 +319,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: 625fb2cc7038b0149b85bd45689996d0, type: 2}
---- !u!114 &2275241682245387978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4931231468555692778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 420f2587f2e64e3cb7ff63ef91895af0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: b5b97be2b25a5a148b357a2f8661e2f2, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: StopGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &2275241682245387979
 MonoBehaviour:
   m_ObjectHideFlags: 0

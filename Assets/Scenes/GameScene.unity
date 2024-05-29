@@ -26835,6 +26835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1891270826}
   - component: {fileID: 1891270827}
+  - component: {fileID: 1891270828}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -26873,6 +26874,34 @@ MonoBehaviour:
   onGoldCountChanged: {fileID: 11400000, guid: 8f308f81a58bfa24cbbb72e1403c1fdb, type: 2}
   onPlayerWin: {fileID: 11400000, guid: d40c8da6c8fcfba4ab2b8f7e7bb88ba0, type: 2}
   FirstStart: 1
+--- !u!114 &1891270828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891270825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420f2587f2e64e3cb7ff63ef91895af0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: b5b97be2b25a5a148b357a2f8661e2f2, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1891270827}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: StopGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1905595234
 GameObject:
   m_ObjectHideFlags: 0
@@ -27607,10 +27636,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2275241682245387978, guid: a126825dbb0f84c4c813314826891cf0, type: 3}
-      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1891270827}
     - target: {fileID: 4931231467878561549, guid: a126825dbb0f84c4c813314826891cf0, type: 3}
       propertyPath: objectContainer
       value: 

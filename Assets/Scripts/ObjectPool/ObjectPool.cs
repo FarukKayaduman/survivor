@@ -11,17 +11,13 @@ namespace ObjectPool
         [SerializeField] private Transform objectContainer;
 
         private int _defaultCapacity;
-        private int _maxSize;
-
-        private int _totalCreatedObjectCount;
         
         public List<T> ActivePool => _activePool;
 
-        protected void SetPool(T objectPrefab, int defaultCapacity, int maxSize)
+        protected void SetPool(T objectPrefab, int defaultCapacity)
         {
             this.objectPrefab = objectPrefab;
             _defaultCapacity = defaultCapacity;
-            _maxSize = maxSize;
 
             for(int i = 0; i < _defaultCapacity; i++)
                     CreateAnInstance();
@@ -29,13 +25,9 @@ namespace ObjectPool
         
         private void CreateAnInstance()
         {
-            if (_totalCreatedObjectCount >= _maxSize)
-                return;
-            
             T instance = Instantiate(objectPrefab, objectContainer);
             instance.gameObject.SetActive(false);
             _passivePool.Enqueue(instance);
-            _totalCreatedObjectCount++;
         }
 
         protected T GetItem()
@@ -53,13 +45,6 @@ namespace ObjectPool
         public void ReleaseItem(T item)
         {
             _activePool.Remove(item);
-
-            if (_totalCreatedObjectCount >= _maxSize)
-            {
-                Destroy(item.gameObject);
-                return;
-            }
-            
             _passivePool.Enqueue(item);
         }
     }

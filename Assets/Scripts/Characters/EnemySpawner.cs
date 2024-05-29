@@ -13,7 +13,6 @@ namespace Characters
         [SerializeField] private Transform target;
 
         private const int PoolDefaultCapacity = 10;
-        private const int PoolMaxSize = 30;
 
         private float _currentEnemyHealth;
     
@@ -29,7 +28,7 @@ namespace Characters
             if (Instance == null)
                 Instance = this;
 
-            SetPool(objectPrefab, PoolDefaultCapacity, PoolMaxSize);
+            SetPool(objectPrefab, PoolDefaultCapacity);
 
             _currentSpawnInterval = InitialSpawnInterval;
         }

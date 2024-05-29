@@ -14,7 +14,6 @@ namespace Attack
         private float _shootingTimer;
 
         private const int PoolDefaultCapacity = 10;
-        private const int PoolMaxSize = 30;
         private const float ShootingRange = 4.0f;
 
         public static float FireRate = 2.0f;
@@ -26,7 +25,7 @@ namespace Attack
             if (Instance == null)
                 Instance = this;
             
-            SetPool(objectPrefab, PoolDefaultCapacity, PoolMaxSize);
+            SetPool(objectPrefab, PoolDefaultCapacity);
         }
         
         public void PerformAttack()

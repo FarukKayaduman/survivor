@@ -31,10 +31,10 @@ namespace Characters
         private void FixedUpdate()
         {
             // Read the keyboard inputs
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            float moveVertical = Input.GetAxis("Vertical");
+            float inputX = Input.GetAxis("Horizontal");
+            float inputY = Input.GetAxis("Vertical");
 
-            _inputVector = new Vector2(moveHorizontal, moveVertical);
+            _inputVector = new Vector2(inputX, inputY);
             rb2D.velocity = _inputVector * MoveSpeed;
         }
         

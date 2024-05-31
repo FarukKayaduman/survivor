@@ -35,6 +35,9 @@ namespace Characters
             float inputY = Input.GetAxis("Vertical");
 
             _inputVector = new Vector2(inputX, inputY);
+            if (_inputVector.magnitude > 1)
+                _inputVector = _inputVector.normalized;
+
             rb2D.velocity = _inputVector * MoveSpeed;
         }
         

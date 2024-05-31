@@ -38,7 +38,7 @@ namespace Characters
             if (_inputVector.magnitude > 1)
                 _inputVector = _inputVector.normalized;
 
-            rb2D.velocity = _inputVector * MoveSpeed;
+            rb2D.velocity = _inputVector * (MoveSpeed * Time.fixedDeltaTime);
         }
         
         private void LateUpdate()

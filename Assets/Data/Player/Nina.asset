@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Nina
   m_EditorClassIdentifier: 
   name: Nina
-  currentHealth: 76
+  currentHealth: 100
   defaultHealth: 100
-  moveSpeed: 4
+  moveSpeed: 200
   defaultDamage: 10
   sprite: {fileID: 938132271, guid: 57a1443e67528144aa07582927559650, type: 3}
   animatorOverrideController: {fileID: 22100000, guid: 93419a34309cf974f8f5db35bebd8e5c, type: 2}

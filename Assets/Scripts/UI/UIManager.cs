@@ -19,6 +19,9 @@ namespace UI
 
         [SerializeField] private TextMeshProUGUI _shotFrequencyLevelText;
         [SerializeField] private TextMeshProUGUI _shotFrequencyCostText;
+        
+        [SerializeField] private TextMeshProUGUI _shovelLevelText;
+        [SerializeField] private TextMeshProUGUI _shovelCostText;
 
         [SerializeField] private GameObject _endGamePanel;
         [SerializeField] private GameObject _deadImage;
@@ -31,7 +34,17 @@ namespace UI
         {
             GameManager.Instance.FirstStart = false;
             gameData.ResetValues();
+            ResetSkillsInfo();
             SetTimeText();
+        }
+
+        private void ResetSkillsInfo()
+        {
+            _shotFrequencyLevelText.text = "Level: " + PlayerSkillManager.ShotFrequencyLevel;
+            _shotFrequencyCostText.text = "Cost: " + PlayerSkillManager.ShotFrequencyIncrementCost;
+            
+            _shovelLevelText.text = "Level: " + PlayerSkillManager.ShovelLevel;
+            _shovelCostText.text = "Cost: " + PlayerSkillManager.ShovelIncrementCost;
         }
 
         public void SetHealthSlider()
@@ -57,6 +70,14 @@ namespace UI
 
             _shotFrequencyLevelText.text = "Level: " + PlayerSkillManager.ShotFrequencyLevel;
             _shotFrequencyCostText.text = "Cost: " + PlayerSkillManager.ShotFrequencyIncrementCost;
+        }
+        
+        public void UpgradeShovel()
+        {
+            PlayerSkillManager.Instance.UpgradeShovelAbility();
+
+            _shovelLevelText.text = "Level: " + PlayerSkillManager.ShovelLevel;
+            _shovelCostText.text = "Cost: " + PlayerSkillManager.ShovelIncrementCost;
         }
 
         public void ActivateLosePanel()

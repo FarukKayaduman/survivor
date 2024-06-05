@@ -169,7 +169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuScene: {fileID: 102900000, guid: 9c7393f7d403f254d85e48c0bba86df6, type: 3}
   gameScene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
-  inGameUI: {fileID: 102900000, guid: d3b10985defb6f84e9ecb40c7707ccbf, type: 3}
   loadingScene: {fileID: 102900000, guid: bf33254c4ae1e0846a1ca3caed82da0c, type: 3}
 --- !u!1 &1923411004
 GameObject:

@@ -49,9 +49,13 @@ namespace Characters
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent<Bullet>(out var bullet))
+            if (collision.TryGetComponent<Bullet>(out _))
             {
                 GetHit(playerData.defaultDamage);
+            }
+            else if (collision.TryGetComponent<Shovel>(out _))
+            {
+                GetHit(Shovel.Damage);
             }
         }
 

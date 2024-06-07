@@ -13,6 +13,7 @@ namespace UI
         [SerializeField] private GameDataSO gameData;
         
         [SerializeField] private Slider _healthSlider;
+        [SerializeField] private Slider _timeSlider;
         [SerializeField] private TextMeshProUGUI _goldText;
         [SerializeField] private TextMeshProUGUI _timeText;
         [SerializeField] private TextMeshProUGUI _defeatedEnemyCountText;
@@ -35,7 +36,14 @@ namespace UI
             GameManager.Instance.FirstStart = false;
             gameData.ResetValues();
             ResetSkillsInfo();
-            SetTimeText();
+            SetTimeUI();
+            ResetTimeSlider();
+        }
+
+        private void ResetTimeSlider()
+        {
+            _timeSlider.value = 0;
+            _timeSlider.maxValue = gameData.DefaultTime;
         }
 
         private void ResetSkillsInfo()
@@ -52,10 +60,11 @@ namespace UI
             _healthSlider.value = playerData.currentHealth;
         }
 
-        public void SetTimeText()
+        public void SetTimeUI()
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(gameData.CurrentTime);
             string formattedTime = $"{(int)timeSpan.TotalMinutes}:{timeSpan.Seconds:00}";
+            _timeSlider.value = gameData.DefaultTime - gameData.CurrentTime;
             _timeText.text = formattedTime;
         }
 

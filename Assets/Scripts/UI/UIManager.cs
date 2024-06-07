@@ -40,11 +40,11 @@ namespace UI
 
         private void ResetSkillsInfo()
         {
-            _shotFrequencyLevelText.text = "Level: " + PlayerSkillManager.ShotFrequencyLevel;
-            _shotFrequencyCostText.text = "Cost: " + PlayerSkillManager.ShotFrequencyIncrementCost;
+            _shotFrequencyLevelText.text = "Lvl " + PlayerSkillManager.ShotFrequencyLevel;
+            _shotFrequencyCostText.text = $"{PlayerSkillManager.ShotFrequencyIncrementCost} <sprite index=2>";
             
-            _shovelLevelText.text = "Level: " + PlayerSkillManager.ShovelLevel;
-            _shovelCostText.text = "Cost: " + PlayerSkillManager.ShovelIncrementCost;
+            _shovelLevelText.text = "Lvl " + PlayerSkillManager.ShovelLevel;
+            _shovelCostText.text = $"{PlayerSkillManager.ShovelIncrementCost} <sprite index=2>";
         }
 
         public void SetHealthSlider()
@@ -68,16 +68,16 @@ namespace UI
         {
             PlayerSkillManager.Instance.UpgradeShotFrequencyAbility();
 
-            _shotFrequencyLevelText.text = "Level: " + PlayerSkillManager.ShotFrequencyLevel;
-            _shotFrequencyCostText.text = "Cost: " + PlayerSkillManager.ShotFrequencyIncrementCost;
+            _shotFrequencyLevelText.text = "Lvl " + PlayerSkillManager.ShotFrequencyLevel;
+            _shotFrequencyCostText.text = $"{PlayerSkillManager.ShotFrequencyIncrementCost} <sprite index=2>";
         }
         
         public void UpgradeShovel()
         {
             PlayerSkillManager.Instance.UpgradeShovelAbility();
 
-            _shovelLevelText.text = "Level: " + PlayerSkillManager.ShovelLevel;
-            _shovelCostText.text = "Cost: " + PlayerSkillManager.ShovelIncrementCost;
+            _shovelLevelText.text = "Lvl " + PlayerSkillManager.ShovelLevel;
+            _shovelCostText.text = $"{PlayerSkillManager.ShovelIncrementCost} <sprite index=2>";
         }
 
         public void ActivateLosePanel()

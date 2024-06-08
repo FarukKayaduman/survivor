@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,9 +6,9 @@ using UnityEngine.UI;
 public class LoadingManager : MonoBehaviour
 {
     [SerializeField] private Slider loadingSlider;
-
-    [SerializeField] private SceneAsset mainMenuScene;
-    [SerializeField] private SceneAsset loadingScene;
+    
+    private const string MainMenuScene = "MainMenuScene";
+    private const string LoadingScene = "LoadingScene";
 
     private void Start()
     {
@@ -20,7 +19,7 @@ public class LoadingManager : MonoBehaviour
     {
         yield return null;
 
-        AsyncOperation operation = SceneManager.LoadSceneAsync(mainMenuScene.name, LoadSceneMode.Additive);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(MainMenuScene, LoadSceneMode.Additive);
         
         operation.allowSceneActivation = false;
         
@@ -33,6 +32,6 @@ public class LoadingManager : MonoBehaviour
             
             yield return null;
         }
-        SceneManager.UnloadSceneAsync(loadingScene.name);
+        SceneManager.UnloadSceneAsync(LoadingScene);
     }
 }

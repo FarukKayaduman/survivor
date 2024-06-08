@@ -1,14 +1,13 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField] private SceneAsset mainMenuScene;
-    [SerializeField] private SceneAsset gameScene;
-    [SerializeField] private SceneAsset loadingScene;
-    
+    private const string MainMenuScene = "MainMenuScene";
+    private const string GameScene = "GameScene";
+    private const string LoadingScene = "LoadingScene";
+
     public static SceneLoader Instance;
     
     private void Awake()
@@ -24,17 +23,17 @@ public class SceneLoader : MonoBehaviour
 
     private void LoadLoadingScene()
     {
-        SceneManager.LoadScene(loadingScene.name, LoadSceneMode.Additive);
+        SceneManager.LoadScene(LoadingScene, LoadSceneMode.Additive);
     }
     
     public IEnumerator LoadGameAsync()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(gameScene.name, LoadSceneMode.Additive);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(GameScene, LoadSceneMode.Additive);
         operation.allowSceneActivation = false;
 
         yield return new WaitUntil(() => !operation.isDone);
         
         operation.allowSceneActivation = true;
-        SceneManager.UnloadSceneAsync(mainMenuScene.name);
+        SceneManager.UnloadSceneAsync(MainMenuScene);
     }
 }

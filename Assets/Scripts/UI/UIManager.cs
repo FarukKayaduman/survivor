@@ -1,7 +1,6 @@
 using System;
 using Characters;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,8 +28,9 @@ namespace UI
         [SerializeField] private GameObject _survivedImage;
 
         [SerializeField] private CharacterSO playerData;
-        [SerializeField] private SceneAsset mainScene;
 
+        private const string mainScene = "MainScene"; 
+        
         private void Start()
         {
             GameManager.Instance.FirstStart = false;
@@ -112,7 +112,7 @@ namespace UI
         public void RestartGame()
         {
             Time.timeScale = 1.0f;
-            SceneManager.LoadScene(mainScene.name);
+            SceneManager.LoadScene(mainScene);
         }
     }
 }

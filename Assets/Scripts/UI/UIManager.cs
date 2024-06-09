@@ -46,6 +46,11 @@ namespace UI
             ResetTimeSlider();
         }
 
+        private void Update()
+        {
+            _timeSlider.value += Time.deltaTime;
+        }
+
         private void ResetHealthSlider()
         {
             _healthSlider.maxValue = playerData.defaultHealth;
@@ -76,7 +81,6 @@ namespace UI
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(gameData.CurrentTime);
             string formattedTime = $"{(int)timeSpan.TotalMinutes}:{timeSpan.Seconds:00}";
-            _timeSlider.value = gameData.DefaultTime - gameData.CurrentTime;
             _timeText.text = formattedTime;
         }
 

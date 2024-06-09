@@ -12,11 +12,11 @@ namespace Characters
 
         [SerializeField] private Transform target;
 
-        private const int PoolDefaultCapacity = 10;
+        private const int PoolDefaultCapacity = 100;
 
         private float _currentEnemyHealth;
     
-        private const float InitialSpawnInterval = 2.25f;
+        private const float InitialSpawnInterval = 1.0f;
         private float _currentSpawnInterval;
 
         private const float DifficultyIncreaseInterval = 10.0f;

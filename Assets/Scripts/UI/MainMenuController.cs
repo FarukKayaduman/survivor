@@ -28,6 +28,7 @@ namespace UI
 
         public void StartGame()
         {
+            Time.timeScale = 1.0f;
             StartCoroutine(SceneLoader.Instance.LoadGameAsync());
         }
 

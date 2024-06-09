@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New GameData", menuName = "GameData")]
 public class GameDataSO : ScriptableObject
 {
+    public CharacterSO SelectedCharacter;
     public GameEvent OnCurrentTimeChanged;
     public GameEvent OnGoldCountChanged;
 

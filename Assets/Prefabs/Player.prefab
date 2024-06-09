@@ -305,6 +305,7 @@ MonoBehaviour:
   characterData: {fileID: 11400000, guid: 927224f23a262204ea467b806480c35b, type: 2}
   spriteRenderer: {fileID: 4931231467575919558}
   animator: {fileID: 8981263140086015536}
+  gameData: {fileID: 11400000, guid: 625fb2cc7038b0149b85bd45689996d0, type: 2}
   rb2D: {fileID: 2275241682245387974}
   weapon: {fileID: 4931231467878561549}
 --- !u!114 &2275241682245387973

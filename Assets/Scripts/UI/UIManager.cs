@@ -29,15 +29,27 @@ namespace UI
 
         [SerializeField] private CharacterSO playerData;
 
-        private const string mainScene = "MainScene"; 
-        
+        private const string mainScene = "MainScene";
+
+        private void Awake()
+        {
+            playerData = gameData.SelectedCharacter;
+        }
+
         private void Start()
         {
             GameManager.Instance.FirstStart = false;
             gameData.ResetValues();
+            ResetHealthSlider();
             ResetSkillsInfo();
             SetTimeUI();
             ResetTimeSlider();
+        }
+
+        private void ResetHealthSlider()
+        {
+            _healthSlider.maxValue = playerData.defaultHealth;
+            _healthSlider.value = playerData.defaultHealth;
         }
 
         private void ResetTimeSlider()

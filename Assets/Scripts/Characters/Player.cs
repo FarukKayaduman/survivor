@@ -5,6 +5,7 @@ namespace Characters
 {
     public class Player : Character
     {
+        [SerializeField] private GameDataSO gameData;
         [SerializeField] private Rigidbody2D rb2D;
         [SerializeField] private Weapon weapon;
 
@@ -21,6 +22,8 @@ namespace Characters
         {
             if (Instance == null)
                 Instance = this;
+            
+            characterData = gameData.SelectedCharacter;
         }
 
         private void Update()

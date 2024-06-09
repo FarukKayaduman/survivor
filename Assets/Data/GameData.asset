@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b0c1c7b2b424641a531f3bc162b2a5, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
+  SelectedCharacter: {fileID: 11400000, guid: 927224f23a262204ea467b806480c35b, type: 2}
   OnCurrentTimeChanged: {fileID: 11400000, guid: 28bd89f1efc7d4444b5e17c561ce62c9, type: 2}
   OnGoldCountChanged: {fileID: 11400000, guid: 8f308f81a58bfa24cbbb72e1403c1fdb, type: 2}

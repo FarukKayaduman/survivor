@@ -17,5 +17,5 @@ MonoBehaviour:
   defaultHealth: 100
   moveSpeed: 200
   defaultDamage: 10
-  sprite: {fileID: -150523396, guid: 0c187a32c5bde4747be8d00770b07403, type: 3}
+  sprite: {fileID: 978012912, guid: 99a24620d31e5ce4e823c32d11e17c2c, type: 3}
   animatorOverrideController: {fileID: 22100000, guid: 93419a34309cf974f8f5db35bebd8e5c, type: 2}
